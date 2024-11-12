@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date Interval</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<p>Start Date: <input type="date" id="startDate" /></p>
+<p>End Date: <input type="date" id="endDate" /></p>
+
+<button id="calculateBtn">Calculate Interval</button>
+
+<p id="result"></p>
+
+<script>
+$(document).ready(function() {
+    $('#calculateBtn').click(function() {
+        var startDate = $('#startDate').val();
+        var endDate = $('#endDate').val();
+
+        // Check if both dates are selected
+        if (startDate && endDate) {
+            var start = new Date(startDate);
+            var end = new Date(endDate);
+            
+            if (end < start) {
+                alert('End date must be later than start date');
+                return;
+            }
+
+            // Calculate difference in milliseconds
+            var diffTime = end - start;
+            
+            // Calculate the total number of days
+            var totalDays = diffTime / (1000 * 3600 * 24);
+
+            // Calculate years, months, weeks, and days
+            var years = Math.floor(totalDays / 365);
+            var months = Math.floor((totalDays % 365) / 30);
+            var weeks = Math.floor(totalDays / 7);
+            var days = totalDays % 7;
+
+            // Display the result
+            $('#result').html(`
+                <strong>Time Difference:</strong><br>
+                Years: ${years}<br>
+                Months: ${months}<br>
+                Weeks: ${weeks}<br>
+                Days: ${Math.floor(totalDays)}<br>
+            `);
+        } else {
+            alert('Please select both start and end dates.');
+        }
+    });
+});
+</script>
+
+</body>
+</html>
